@@ -12,6 +12,7 @@ import time
 import socket
 
 from drone_infos.vio_streamer import vio_streamer
+from drone_infos.protocol import parse_rover_telemetry, ROVER_TELEMETRY_PORT
 from server.server import UI_LISTEN_ADDR, ThreadingHTTPServer, Handler
 from server.websocket_server import ws_broadcast, start_ws_server
 
@@ -58,18 +59,17 @@ def rover_udp_listener():
     global latest_rover_x, latest_rover_y, latest_rover_o
 
     sock=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-    sock.bind(("0.0.0.0",5006))
-    print("[ROVER] Listening on :5006")
+    sock.bind(("0.0.0.0", ROVER_TELEMETRY_PORT))
+    print("[ROVER] Listening on :%d" % ROVER_TELEMETRY_PORT)
 
     while True:
         msg,_=sock.recvfrom(1024)
         msg=msg.decode().strip()
 
-        if msg.startswith("ROVER"):
-            p = msg.split(",")
-            latest_rover_x = float(p[1])
-            latest_rover_y = float(p[2])
-            latest_rover_o = float(p[3])
+        # Parse ROVER,x,y,o telemetry via the shared protocol module.
+        parsed = parse_rover_telemetry(msg)
+        if parsed is not None:
+            latest_rover_x, latest_rover_y, latest_rover_o = parsed
 
         # Rebroadcast all rover messages to UI
         ws_broadcast(msg)

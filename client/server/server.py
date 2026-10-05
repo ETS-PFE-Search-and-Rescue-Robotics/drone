@@ -4,12 +4,12 @@ import urllib.parse
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from socketserver import ThreadingMixIn
 from pathlib import Path
-import math
 import socket
 
 from drone_infos.vio_streamer import get_latest_drone_local
 from server.websocket_server import ws_broadcast
 from drone_infos.drone_data import set_R, set_T, get_R, get_T, set_calib
+from drone_infos.transform import compute_calibration
 
 # 3-point calibration storage (A,B,C) used to compute UI world transform
 A = None
@@ -130,31 +130,16 @@ class Handler(BaseHTTPRequestHandler):
             # We don't throw 400; just tell the UI we need all points
             return self._ok("ERR Missing A/B/C")
 
-        Ax, Ay, _ = A
-        Bx, By, _ = B
-        Cx, Cy, _ = C
+        # Compute the 2D world transform (R, T) from the 3 calibration points.
+        # The math lives in drone_infos.transform so it can be unit-tested.
+        try:
+            R, T = compute_calibration(A, B, C)
+        except ValueError:
+            # Degenerate calibration (coincident points) — tell the UI to retry
+            return self._ok("ERR Degenerate calibration")
 
-        # x-axis: from A to B
-        vx = (Bx - Ax, By - Ay)
-        ln = math.hypot(*vx)
-        ux = (vx[0] / ln, vx[1] / ln)
-
-        # y-axis: from A to C
-        vy = (Cx - Ax, Cy - Ay)
-        ln = math.hypot(*vy)
-        uy = (vy[0] / ln, vy[1] / ln)
-
-        # R is column major-style here: columns are ux and uy
-        set_R([
-            [ux[0], uy[0]],
-            [ux[1], uy[1]]
-        ])
-
-        # T: translate so that world-origin sits at A
-        set_T((
-            -Ax * get_R()[0][0] - Ay * get_R()[0][1],
-            -Ax * get_R()[1][0] - Ay * get_R()[1][1]
-        ))
+        set_R(R)
+        set_T(T)
 
         set_calib(True)
         # Notify the UI with the matrix and vector (so they can compute properly)

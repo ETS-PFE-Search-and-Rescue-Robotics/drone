@@ -1,0 +1,12 @@
+[tool.pytest.ini_options]
+# Project (non-ROS2) unit tests live under client/tests and import the
+# client/ package tree (drone_infos, server). ROS2 packages (PFE_*) keep
+# their own ament lint stubs and are not collected here.
+testpaths = ["client/tests"]
+pythonpath = ["client"]
+addopts = "-ra"
+
+[tool.flake8]
+# Advisory config; CI enforces only the real-error subset (E9,F63,F7,F82).
+max-line-length = 120
+extend-exclude = ["voxl-portal-v0.7.11", "failed", "build", "install", "log"]
