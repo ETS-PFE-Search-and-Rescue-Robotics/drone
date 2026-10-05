@@ -2,3 +2,9 @@ drone-ui-offline.tar.gz
 vendor/
 drone-code
 .DS_Store
+/.venv/*
+.idea/*
+build/*
+install/*
+log/*
+__pycache__

@@ -1,5 +1,9 @@
 # Drone Code
 
+## IMPORTANT
+Les scripts qui sont dans "Autre" sont là à titre de préservation et je ne sais pas ce qu'ils font exactement. (Je vais les upload demain)
+
+
 Code running on the Starling 2 Max with VOXL 2 drone.
 
 ## Getting started
