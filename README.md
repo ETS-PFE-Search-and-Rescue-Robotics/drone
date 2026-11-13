@@ -151,5 +151,13 @@ Now when you move the drone around, its mouvement will be accurately tracked and
 
 
 
+
 > Made with care by [Adam Mihajlovic](https://github.com/Funnyadd), [Maxence Lord](https://github.com/ImprovUser) and [Raphaël Camara](https://github.com/RaphaelCamara) ❤️
 -->
+
+## Contributors
+<a href="https://github.com/ETS-PFE-Search-and-Rescue-Robotics/drone/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ETS-PFE-Search-and-Rescue-Robotics/drone" />
+</a>
+
+Made with [contrib.rocks](https://contrib.rocks).
