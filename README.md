@@ -148,7 +148,8 @@ Place your drone on the origin point (it's whatever you decide the origin is)
 
 Now when you move the drone around, its mouvement will be accurately tracked and displayed on the map.
 
--->
+
 
 
 > Made with care by [Adam Mihajlovic](https://github.com/Funnyadd), [Maxence Lord](https://github.com/ImprovUser) and [Raphaël Camara](https://github.com/RaphaelCamara) ❤️
+-->
