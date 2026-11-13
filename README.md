@@ -1,22 +1,44 @@
 # Drone Code
 
-## IMPORTANT
-Les scripts qui sont dans "Autre" sont là à titre de préservation et je ne sais pas ce qu'ils font exactement. (Je vais les upload demain)
+> [!CAUTION]
+> - **Do not update the drone**, as it may break the existing code.
+> - **Never connect the battery and wall power simultaneously.**
 
+## First Connection
 
-Code running on the Starling 2 Max with VOXL 2 drone.
+### ADB Connection
 
-## Getting started
+[ADB Setup Guide](https://docs.modalai.com/setting-up-adb/)
 
-### Requirements (Local machine)
+1. Install ADB on your computer.
+2. Connect the drone to wall power.
+3. Connect the drone to your computer via USB.
+4. Run `adb devices` to verify that the drone is detected.
+5. Run `adb shell` to access the drone.
+
+### SSH Connection
+
+**Wi-Fi Network**
+- SSID: `ETS_5G_Platform`
+- Password: `ets5GA3434`
+
+**SSH Credentials**
+- Username: `root`
+- IP Address: `192.168.0.199`
+- Password: `oelinux123`
+
+Connect using:
+
+```bash
+ssh root@192.168.0.199
+```
+<!--
+
+### Requirements
 
 In order to run the code in this repository, you'll need the following dependencies :
 
 - **Python 3.6.9+**
-- Access to the drone's network (VOXL-xxxxxx, password: `1234567890`) 
-- Drone SSH/SCP login:
-  - **user**: `voxl`
-  - **password**: `voxl`
 
 ### Running locally
 
@@ -125,6 +147,8 @@ Place your drone on the origin point (it's whatever you decide the origin is)
 6. Click on the `Finish Calibration` button to complete the calibration.
 
 Now when you move the drone around, its mouvement will be accurately tracked and displayed on the map.
+
+-->
 
 
 > Made with care by [Adam Mihajlovic](https://github.com/Funnyadd), [Maxence Lord](https://github.com/ImprovUser) and [Raphaël Camara](https://github.com/RaphaelCamara) ❤️
